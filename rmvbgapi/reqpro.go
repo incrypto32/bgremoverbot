@@ -32,14 +32,23 @@ func NewUploadRequest(providerUrl string, params map[string]string, paramName, p
 			return nil, err
 		}
 		_, err = io.Copy(part, file)
+		if err != nil {
+			fmt.Println(err)
+			return nil, err
+		}
 
 	} else {
-		part, err := writer.CreateFormFile(paramName, "myimage")
+		part, err := writer.CreateFormFile(paramName, "myimage.png")
 		if err != nil {
 			fmt.Println(err)
 			return nil, err
 		}
 		_, err = io.Copy(part, inresp.Body)
+		if err != nil {
+			fmt.Println(err)
+			return nil, err
+		}
+		defer inresp.Body.Close()
 	}
 
 	for key, val := range params {
@@ -56,7 +65,7 @@ func NewUploadRequest(providerUrl string, params map[string]string, paramName, p
 	if apiKey != "" {
 		req.Header.Add("X-Api-Key", apiKey)
 	}
-	req.Header.Add("User-Agent", "incrypto-telegram-bot by Krishnanand")
+	req.Header.Add("User-Agent", "incrypto-telegram-bot by incrypt0")
 	return req, err
 }
 func NewUrlRequest(providerUrl string, imageUrl string, params map[string]string, apiKey string) (*http.Request, error) {

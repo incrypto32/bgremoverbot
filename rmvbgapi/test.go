@@ -1,8 +1,6 @@
 package rmvbgapi
 
 import (
-	"bytes"
-	"io"
 	"log"
 	"net/http"
 	"os"
@@ -30,26 +28,26 @@ func Driver(providerUrl string, apiKey string, imageUrl string) (*http.Response,
 		log.Fatal(err)
 	} else {
 
-		//creating a byte buffer to read from the http response recieved
-		body := &bytes.Buffer{}
+		// //creating a byte buffer to read from the http response recieved
+		// body := &bytes.Buffer{}
 
-		out, err := os.Create("Blah.png")
-		if err != nil {
-			// panic?
-		}
-		defer out.Close()
-		io.Copy(out, resp.Body)
-		//using the buffer and setting it up to read from body of http Response
-		_, err = body.ReadFrom(resp.Body)
-		if err != nil {
-			log.Fatal(err)
-		}
+		// out, err := os.Create("Blah.png")
+		// if err != nil {
+		// 	// panic?
+		// }
+		// defer out.Close()
+		// io.Copy(out, resp.Body)
+		// //using the buffer and setting it up to read from body of http Response
+		// _, err = body.ReadFrom(resp.Body)
+		// if err != nil {
+		// 	log.Fatal(err)
+		// }
 
-		//Closing the response body
-		resp.Body.Close()
+		// //Closing the response body
+		// resp.Body.Close()
 
 	}
-	return nil, nil
+	return resp, err
 }
 
 // upload file request geneartor

@@ -33,5 +33,6 @@ func main() {
 		log.Fatal(err)
 		return
 	}
+	resp.Body.Close()
 	f.Close()
 }
