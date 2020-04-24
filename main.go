@@ -74,67 +74,68 @@ func webHookHandler(resp http.ResponseWriter, req *http.Request) {
 	fmt.Println("Checked message text for hello :webHookHandler")
 
 	if len(body.Message.PhotoArr) != 0 {
+		imageHandler(body.Message.PhotoArr[2].ID, body.Message.Chat.ID)
 
-		fmt.Println("The Message is an image :webHookHandler")
-
-		imageUrl, err := getPhotoUrl(body.Message.PhotoArr[2].ID)
-		if err != nil {
-			log.Fatal(err)
-			return
-		}
-
-		fmt.Println("getPhotoUrl Completed successfully :webHookHandler")
-
-		fmt.Println("The image Url is : ::webHookHandler:" + imageUrl)
-
-		if imageUrl != "" {
-
-			fmt.Println("checked whether image url is an emty string and its not :webHookHandler")
-
-			imageUrl = botFileUrl + imageUrl
-
-			fmt.Println("created download url from image path :webHookHandler :", imageUrl)
-
-			a := map[string]string{
-				"size":      "auto",
-				"image_url": imageUrl,
-			}
-
-			fmt.Println("map of params created :webHookHandler :", a)
-
-			imgReq, err := rmvbgapi.NewUrlRequest("https://api.remove.bg/v1.0/removebg", imageUrl, a, apiKey)
-			fmt.Println("Got img Req")
-			if err != nil {
-				fmt.Println("oh shit an error occured on imgUrl req")
-				log.Fatal(err)
-				return
-			}
-
-			fmt.Println("img url request performed without errors :webHookHandler")
-
-			fmt.Println(imgReq)
-			resp, err := rmvbgapi.Driver("https://api.remove.bg/v1.0/removebg", apiKey, imageUrl)
-
-			if err != nil {
-				log.Fatal(err)
-				return
-			}
-			fmt.Println(*resp)
-			err = sendPhoto(body.Message.Chat.ID, resp)
-			if err != nil {
-				log.Fatal(err)
-				return
-			}
-		}
-		// err = sendPhoto(body.Message.Chat.ID, nil)
-		// if err != nil {
-		// 	log.Fatal(err)
-		// 	return
-		// }
 	}
 
 	fmt.Println("reply sent")
 
+}
+
+// when the message is an image this function is called
+
+func imageHandler(fileId string, chatId int64) {
+	fmt.Println("The Message is an image :webHookHandler")
+
+	imageUrl, err := getPhotoUrl(fileId)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	fmt.Println("getPhotoUrl Completed successfully :webHookHandler")
+
+	fmt.Println("The image Url is : ::webHookHandler:" + imageUrl)
+
+	if imageUrl != "" {
+
+		fmt.Println("checked whether image url is an emty string and its not :webHookHandler")
+
+		imageUrl = botFileUrl + imageUrl
+
+		fmt.Println("created download url from image path :webHookHandler :", imageUrl)
+
+		a := map[string]string{
+			"size":      "auto",
+			"image_url": imageUrl,
+		}
+
+		fmt.Println("map of params created :webHookHandler :", a)
+
+		imgReq, err := rmvbgapi.NewUrlRequest("https://api.remove.bg/v1.0/removebg", imageUrl, a, apiKey)
+		fmt.Println("Got img Req")
+		if err != nil {
+			fmt.Println("oh shit an error occured on imgUrl req")
+			log.Fatal(err)
+			return
+		}
+
+		fmt.Println("img url request performed without errors :webHookHandler")
+
+		fmt.Println(imgReq)
+		resp, err := rmvbgapi.Driver("https://api.remove.bg/v1.0/removebg", apiKey, imageUrl)
+
+		if err != nil {
+			log.Fatal(err)
+			return
+		}
+		fmt.Println(*resp)
+		err = sendPhoto(chatId, resp)
+		if err != nil {
+			log.Fatal(err)
+			return
+		}
+	}
 }
 
 //This function is used to get the url of a photo from file_id
