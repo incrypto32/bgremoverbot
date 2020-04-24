@@ -74,7 +74,8 @@ func webHookHandler(resp http.ResponseWriter, req *http.Request) {
 	fmt.Println("Checked message text for hello :webHookHandler")
 
 	if len(body.Message.PhotoArr) != 0 {
-		imageHandler(body.Message.PhotoArr[2].ID, body.Message.Chat.ID)
+		len := len(body.Message.PhotoArr)
+		imageHandler(body.Message.PhotoArr[len-1].ID, body.Message.Chat.ID)
 
 	}
 
