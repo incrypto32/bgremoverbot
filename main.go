@@ -42,6 +42,7 @@ type sendMessageReqBody struct {
 
 var apiKey string = os.Getenv("REMOVE_BG_API_KEY")
 var botToken string = os.Getenv("TELEGRAM_TOKEN")
+var port string = os.Getenv("PORT")
 var botFileUrl = "https://api.telegram.org/file/bot" + botToken + "/"
 var botUrl = "https://api.telegram.org/bot" + botToken + "/"
 
@@ -236,5 +237,5 @@ func sendPhoto(chatID int64, inpresp *http.Response) error {
 
 func main() {
 	fmt.Println(apiKey, botToken)
-	_ = http.ListenAndServe(":3000", http.HandlerFunc(webHookHandler))
+	_ = http.ListenAndServe(":"+port, http.HandlerFunc(webHookHandler))
 }
