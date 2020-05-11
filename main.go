@@ -69,7 +69,7 @@ func webHookHandler(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	fmt.Println("Decoded request successfully")
+	fmt.Println("Decoded request successfully :webHookHandler")
 
 	if strings.Contains(strings.ToLower(body.Message.Text), "hello") {
 		fmt.Println("Message text contains hello :webHookHandler")
