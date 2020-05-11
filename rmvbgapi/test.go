@@ -1,6 +1,7 @@
 package rmvbgapi
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -12,10 +13,18 @@ import (
 // 	Driver(apiKey)
 // 	// fmt.Println(path)
 // }
-func Driver(providerUrl string, apiKey string, imageUrl string) (*http.Response, error) {
+func Driver(
+	providerUrl string,
+	apiKey string,
+	imageUrl string,
+) (*http.Response, error) {
+	var funcName string = "Driver : "
+	fmt.Printf("\n\n")
+
 	req, err := urlRequestGen(providerUrl, apiKey, imageUrl)
+	fmt.Println(funcName, "urlrequestGen Successfull")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(funcName, err)
 
 	}
 
@@ -24,8 +33,9 @@ func Driver(providerUrl string, apiKey string, imageUrl string) (*http.Response,
 
 	//client performing  the generated request template
 	resp, err := client.Do(req)
+	fmt.Println(funcName, "Client Performed Request")
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(funcName, err)
 	} else {
 
 		// //creating a byte buffer to read from the http response recieved
@@ -69,6 +79,9 @@ func UploadFileRequestGen(providerUrl string, apiKey string, pathToFile string) 
 
 // url request genearator
 func urlRequestGen(providerUrl string, apiKey string, imageUrl string) (*http.Request, error) {
+	fmt.Printf("\n\n")
+	var funcName string = "urlRequesGen : "
+	fmt.Println(funcName, "Called")
 	extraParams := map[string]string{
 		"size":      "auto",
 		"image_url": imageUrl,

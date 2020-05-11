@@ -68,43 +68,52 @@ func NewUploadRequest(providerUrl string, params map[string]string, paramName, p
 	req.Header.Add("User-Agent", "incrypto-telegram-bot by incrypt0")
 	return req, err
 }
-func NewUrlRequest(providerUrl string, imageUrl string, params map[string]string, apiKey string) (*http.Request, error) {
 
-	fmt.Println("Called NewUrlRequest with provider url and api KEy:NewUrlRequest :", providerUrl, apiKey)
-	fmt.Println("The image url is :NewUrlRequest: ", imageUrl)
-	fmt.Println("The params are :NewUrlRequest", params)
-
+func NewUrlRequest(
+	providerUrl string,
+	imageUrl string,
+	params map[string]string,
+	apiKey string,
+) (*http.Request, error) {
+	var funcName string = "NewUrlRequest : "
+	fmt.Printf("\n\n")
+	fmt.Println(funcName, "Called NewUrlRequest with provider url and api key")
+	// fmt.Println(funcName, "The image url is  ", imageUrl)
+	// fmt.Println(funcName, "The params are ", params)
 	// We are setting up the key value pairs for the post method
 	form := url.Values{}
 
-	fmt.Println("Created the for tempelate for the http Request ::NewUrlRequest ")
+	fmt.Println(funcName, "Created the for tempelate for the http Request ")
 
 	// here we add the key value pairs  to the Values tempelate
 	for key, val := range params {
 		form.Add(key, val)
-		fmt.Println("Added :NewUrlRequest :", key, val)
+		fmt.Printf("\n")
+		fmt.Println(funcName, "Added :", key, val)
 	}
-	fmt.Println("Added key value pairs : NewUrlRequest :")
-	fmt.Println("Form is :NewUrlRequest:")
+	fmt.Println()
+	fmt.Println(funcName, "Added key value pairs  :")
+	// fmt.Println("Form is :NewUrlRequest:")
 	// Here we are filling the request model
 
 	req, err := http.NewRequest("POST", providerUrl, strings.NewReader(form.Encode()))
 
 	if err != nil {
-		fmt.Println("shit an error while creating new http req :NewUrlRequest")
+		fmt.Println(funcName, "shit an error while creating new http req ")
 		return nil, err
 	}
-	fmt.Println("Request created with no error  :NewUrlRequest  :")
+	fmt.Println(funcName, "Request created with no error ")
 	req.PostForm = form
-	fmt.Println("Added form to req ::NewUrlRequest :")
+	fmt.Println(funcName, "Added form to req:")
 	// Adding headers and stuff
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	if apiKey != "" {
-		fmt.Println("Checked if apikey is empty and yes it is :NewUrlRequest")
+		fmt.Println(funcName, "Checked if apikey is empty and yes it is ")
 		req.Header.Add("X-Api-Key", apiKey)
 	}
-	fmt.Println("Everythings fine in here ::NewUrlRequest")
-	fmt.Println(*req, ":NewUrlRequest")
+	fmt.Println(funcName, "Everythings fine in here ")
+	// fmt.Println(funcName, *req)
 	// req.Header.Add("User-Agent", "incrypto-telegram-bot by Krishnanand")
+	fmt.Printf("\n\n")
 	return req, err
 }
