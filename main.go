@@ -46,6 +46,15 @@ var port string = os.Getenv("PORT")
 var botFileUrl = "https://api.telegram.org/file/bot" + botToken + "/"
 var botUrl = "https://api.telegram.org/bot" + botToken + "/"
 
+//
+// Main Function
+//
+
+func main() {
+	fmt.Printf("apiKey:%s\nbotTokern:%s\nport:%s", apiKey, botToken, port)
+	_ = http.ListenAndServe(":"+port, http.HandlerFunc(webHookHandler))
+}
+
 func webHookHandler(resp http.ResponseWriter, req *http.Request) {
 
 	fmt.Println("________webhookHandler called________")
@@ -233,9 +242,4 @@ func sendPhoto(chatID int64, inpresp *http.Response) error {
 	fmt.Println(resp)
 	return err
 
-}
-
-func main() {
-	fmt.Println(apiKey, botToken)
-	_ = http.ListenAndServe(":"+port, http.HandlerFunc(webHookHandler))
 }
