@@ -11,12 +11,12 @@ import (
 // 	const apiKey = "76b1Xqw9i82pTVtBC6YFQnSk"
 // 	Driver(apiKey)
 // 	// fmt.Println(path)
-
 // }
 func Driver(providerUrl string, apiKey string, imageUrl string) (*http.Response, error) {
 	req, err := urlRequestGen(providerUrl, apiKey, imageUrl)
 	if err != nil {
 		log.Fatal(err)
+
 	}
 
 	//creating an http client
