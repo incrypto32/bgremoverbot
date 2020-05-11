@@ -51,27 +51,27 @@ func webHookHandler(resp http.ResponseWriter, req *http.Request) {
 	fmt.Println("________webhookHandler called________")
 	// initializing a webhook request body type
 	body := &webHookReqBody{}
-
-	fmt.Println("webHook request body created :webHookHandler")
+	var funcName string = "webHookHandler : "
+	fmt.Println(funcName, "webHook request body created")
 
 	// error handling
 	if err := json.NewDecoder(req.Body).Decode(body); err != nil {
-		fmt.Println("could not decode request body :webHookHandler", err)
+		fmt.Println(funcName, "could not decode request body", err)
 		return
 	}
 
-	fmt.Println("Decoded request successfully")
+	fmt.Println(funcName, "Decoded request successfully")
 
 	if strings.Contains(strings.ToLower(body.Message.Text), "hello") {
-		fmt.Println("Message text contains hello :webHookHandler")
+		fmt.Println(funcName, "Message text contains hello")
 		if err := sendReply(body.Message.Chat.ID); err != nil {
 			log.Fatal(err)
-			fmt.Println("error in sending reply : :webHookHandler:", err)
+			fmt.Println(funcName, "error in sending reply ", err)
 			return
 		}
 	}
 
-	fmt.Println("Checked message text for hello :webHookHandler")
+	fmt.Println(funcName, "Checked message text for hello")
 
 	if len(body.Message.PhotoArr) != 0 {
 		len := len(body.Message.PhotoArr)
