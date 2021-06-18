@@ -5,5 +5,5 @@ This is a non-commercial hobby project writter in golang.
 
 Here are a few screenshots
 
-| <img src="./images/1.png"> | <img src="images/2.png"> | <img src="images/3.png"> | 
+| <img src="images/1.jpg"> | <img src="images/2.jpg"> | <img src="images/3.jpg"> | 
 |--|--|--|
